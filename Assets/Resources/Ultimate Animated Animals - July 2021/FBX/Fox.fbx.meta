@@ -3,7 +3,32 @@ guid: 7831148fcc60a9b4a8b0293a2798eee2
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Black
+    second: {fileID: 2100000, guid: a38ed333889f1e34c966e6a86250a7dd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Eyes
+    second: {fileID: 2100000, guid: a38ed333889f1e34c966e6a86250a7dd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Grey
+    second: {fileID: 2100000, guid: 655e7a83d193f614391ee1f4fb26a7aa, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Main
+    second: {fileID: 2100000, guid: 690b81da087df554195b900c64e93193, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Main_Light
+    second: {fileID: 2100000, guid: 690b81da087df554195b900c64e93193, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -33,8 +58,8 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: AnimalArmature|Attack
-      takeName: AnimalArmature|Attack
+      name: AnimalArmature|AnimalArmature|AnimalArmature|Attack
+      takeName: AnimalArmature|AnimalArmature|AnimalArmature|Attack
       internalID: 4656682715372376308
       firstFrame: 0
       lastFrame: 40
@@ -62,8 +87,8 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: AnimalArmature|Death
-      takeName: AnimalArmature|Death
+      name: AnimalArmature|AnimalArmature|AnimalArmature|Death
+      takeName: AnimalArmature|AnimalArmature|AnimalArmature|Death
       internalID: 7370985682789098114
       firstFrame: 0
       lastFrame: 32
@@ -91,8 +116,8 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: AnimalArmature|Eating
-      takeName: AnimalArmature|Eating
+      name: AnimalArmature|AnimalArmature|AnimalArmature|Eating
+      takeName: AnimalArmature|AnimalArmature|AnimalArmature|Eating
       internalID: 5845618705403835542
       firstFrame: 0
       lastFrame: 76
@@ -120,8 +145,8 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: AnimalArmature|Gallop
-      takeName: AnimalArmature|Gallop
+      name: AnimalArmature|AnimalArmature|AnimalArmature|Gallop
+      takeName: AnimalArmature|AnimalArmature|AnimalArmature|Gallop
       internalID: -7666980397028532464
       firstFrame: 0
       lastFrame: 17
@@ -149,8 +174,8 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: AnimalArmature|Gallop_Jump
-      takeName: AnimalArmature|Gallop_Jump
+      name: AnimalArmature|AnimalArmature|AnimalArmature|Gallop_Jump
+      takeName: AnimalArmature|AnimalArmature|AnimalArmature|Gallop_Jump
       internalID: 9013133730026320192
       firstFrame: 0
       lastFrame: 28
@@ -178,8 +203,8 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: AnimalArmature|Idle
-      takeName: AnimalArmature|Idle
+      name: AnimalArmature|AnimalArmature|AnimalArmature|Idle
+      takeName: AnimalArmature|AnimalArmature|AnimalArmature|Idle
       internalID: -5105944257485555118
       firstFrame: 0
       lastFrame: 100
@@ -207,8 +232,8 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: AnimalArmature|Idle_2
-      takeName: AnimalArmature|Idle_2
+      name: AnimalArmature|AnimalArmature|AnimalArmature|Idle_2
+      takeName: AnimalArmature|AnimalArmature|AnimalArmature|Idle_2
       internalID: 9203789705941672436
       firstFrame: 0
       lastFrame: 100
@@ -236,8 +261,8 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: AnimalArmature|Idle_2_HeadLow
-      takeName: AnimalArmature|Idle_2_HeadLow
+      name: AnimalArmature|AnimalArmature|AnimalArmature|Idle_2_HeadLow
+      takeName: AnimalArmature|AnimalArmature|AnimalArmature|Idle_2_HeadLow
       internalID: -7984107131484065872
       firstFrame: 0
       lastFrame: 120
@@ -265,8 +290,8 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: AnimalArmature|Idle_HitReact_Left
-      takeName: AnimalArmature|Idle_HitReact_Left
+      name: AnimalArmature|AnimalArmature|AnimalArmature|Idle_HitReact_Left
+      takeName: AnimalArmature|AnimalArmature|AnimalArmature|Idle_HitReact_Left
       internalID: -3818105308243361847
       firstFrame: 0
       lastFrame: 20
@@ -294,8 +319,8 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: AnimalArmature|Idle_HitReact_Right
-      takeName: AnimalArmature|Idle_HitReact_Right
+      name: AnimalArmature|AnimalArmature|AnimalArmature|Idle_HitReact_Right
+      takeName: AnimalArmature|AnimalArmature|AnimalArmature|Idle_HitReact_Right
       internalID: -3992859531268994507
       firstFrame: 0
       lastFrame: 20
@@ -323,8 +348,8 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: AnimalArmature|Jump_ToIdle
-      takeName: AnimalArmature|Jump_ToIdle
+      name: AnimalArmature|AnimalArmature|AnimalArmature|Jump_ToIdle
+      takeName: AnimalArmature|AnimalArmature|AnimalArmature|Jump_ToIdle
       internalID: 8400692634799720655
       firstFrame: 0
       lastFrame: 40
@@ -352,8 +377,8 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: AnimalArmature|Walk
-      takeName: AnimalArmature|Walk
+      name: AnimalArmature|AnimalArmature|AnimalArmature|Walk
+      takeName: AnimalArmature|AnimalArmature|AnimalArmature|Walk
       internalID: -4864718358596981803
       firstFrame: 0
       lastFrame: 32
