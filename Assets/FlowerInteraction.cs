@@ -8,22 +8,48 @@ public class FlowerInteraction : MonoBehaviour
     private bool isColliding;
     [SerializeField] Collider collider;
 
+    [SerializeField] float interactionDuration = 5;
+
+    private float interactionTimer;
+
+    private bool isFinished;
+
+    void Awake()
+    {
+        interactionTimer = interactionDuration;
+    }
+
     void Update()
     {
+        if (isColliding)
+        {
+            interactionTimer = interactionTimer - Time.deltaTime;
+        }
 
-        Debug.Log(isColliding);
-
+        if (interactionTimer <= 0 && !isFinished)
+        {
+            FinishPollinating();
+        }
+        
     }
 
-    // OnCollisionEnter() and OnCollisionExit() are built-in Unity methods
-    public void OnCollisionEnter(Collision collision)
+    public void StartPollinating()
     {
         isColliding = true;
+        Debug.Log("Stating to pollinate");
+
     }
 
-    public void OnCollisionExit(Collision collision)
+    public void StopPollinating()
     {
         isColliding = false;
     }
+
+    public void FinishPollinating()
+    {
+        Debug.Log("Flower consumed! +30");
+        isFinished = true;
+    }
+
 
 }

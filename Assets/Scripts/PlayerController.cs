@@ -45,7 +45,7 @@ public class PlayerController : MonoBehaviour
         {
             dashInput = false;
         }
-    
+
     }
 
     public void Move(InputAction.CallbackContext context)
@@ -53,7 +53,7 @@ public class PlayerController : MonoBehaviour
         input = context.ReadValue<Vector2>();
         direction = new Vector3(input.x, 0.0f, input.y);
 
-        Debug.Log(direction);
+        // Debug.Log(direction);
 
     }
 
@@ -65,8 +65,26 @@ public class PlayerController : MonoBehaviour
             dashInput = true;
             dashTimer = dashDuration;
         }
-        
-        Debug.Log(context.phase);
+
+        // Debug.Log(context.phase);
     }
+
+    public void OnTriggerEnter(Collider other)
+    {
+        try
+        {
+            other.transform.parent.GetComponent<FlowerInteraction>().StartPollinating();
+        }
+        catch (NullReferenceException){
+            Debug.Log("lmao");
+        }
+    }
+
+
+    public void OnTriggerExit(Collider other)
+    {
+        Debug.Log("OnTriggerEXIT");
+    }
+
 
 }
