@@ -92,7 +92,13 @@ public class CatController : MonoBehaviour
     [SerializeField]
     private float jumpOffset;
 
+    [SerializeField]
     private bool isJumping;
+
+    [SerializeField]
+    private float jumpDelayTime;
+
+    private float jumpDelayTimer;
 
     [Header("Hitboxes")]
 
@@ -114,7 +120,6 @@ public class CatController : MonoBehaviour
             isJumping = false;
         }
         Move();
-        HandleAttack();
         if (bossState == BossState.WALK_AROUND)
         {
             UpdateTimer(ref orbitToAttackTimer);
@@ -123,6 +128,7 @@ public class CatController : MonoBehaviour
         UpdateTimer(ref onAttackHeadOverrideTimer);
         UpdateTimer(ref hitboxStartTimer);
         UpdateTimer(ref hitboxEndTimer);
+        UpdateTimer(ref jumpDelayTimer);
 
         if (bossState == BossState.ATTACK && hitboxStartTimer <= 0 && hitboxEndTimer > 0)
         {
@@ -191,6 +197,7 @@ public class CatController : MonoBehaviour
             ResetTimer(ref onAttackHeadOverrideTimer, onAttackHeadOverrideTime);
             ResetTimer(ref hitboxStartTimer, hitboxStartTime);
             ResetTimer(ref hitboxEndTimer, hitboxEndTime);
+            ResetTimer(ref jumpDelayTimer, jumpDelayTime);
         }
         else if (bossState != BossState.WALK_AROUND && attackCooldownTimer <= 0)
         {
@@ -241,11 +248,20 @@ public class CatController : MonoBehaviour
                 break;
             
             case BossState.ATTACK:
-                if (onAttackHeadOverrideTimer <= 0 && isJumping == false)
+                // Keep rotating orbiter target when attacking
+                orbiter.transform.Rotate(Vector3.up, walkAroundSpeed * Time.deltaTime);
+
+                if (pounceAttackHitbox.activeSelf && jumpDelayTimer <= 0)
                 {
-                    direction = transform.position - lookAtTarget.transform.position;
+                    direction = lookAtTarget.transform.position - transform.position;
+                    float distance = Vector3.Distance(transform.position, lookAtTarget.transform.position);
+                    distance -= jumpOffset;
+                    transform.position = Vector3.Lerp(transform.position, transform.position + Vector3.Normalize(direction) * distance, jumpForce * Time.deltaTime);
                     //transform.DOJump(lookAtTarget.transform.position + direction * jumpOffset, jumpForce, 1, hitboxEndTime);
-                    isJumping = true;
+                    if (isJumping == false)
+                    {
+                        isJumping = true;
+                    }
                 }
 
                 if (hitboxEndTime <= 0 && isJumping)
@@ -258,18 +274,13 @@ public class CatController : MonoBehaviour
                 targetRotation = transform.rotation;
                 transform.rotation = Quaternion.Lerp(currentRotation, targetRotation, walkRotationSpeed * Time.deltaTime);
 
-                Debug.Log("Attack");
+                //Debug.Log("Attack");
                 break;
             
             default:
                 Debug.LogError("BossState has been set to an invalid value");
                 break;
         }
-    }
-
-    private void HandleAttack()
-    {
-
     }
 
     private void OnDrawGizmos()

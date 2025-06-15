@@ -50,7 +50,7 @@ MonoBehaviour:
   animator: {fileID: 7761227224579724479}
   walkSpeed: 0.55
   walkRotationSpeed: 4
-  walkAroundRadius: 5
+  walkAroundRadius: 8
   walkAroundTarget: {x: 0, y: 0, z: 0}
   walkAroundSpeed: 8
   orbiter: {fileID: 0}
@@ -58,14 +58,16 @@ MonoBehaviour:
   neckBone: {fileID: 5241195468657657107}
   lookAtTarget: {fileID: 0}
   neckRotationSpeed: 0.5
-  orbitToAttackTime: 3
-  orbitToAttackOffsetMax: 3
+  orbitToAttackTime: 4
+  orbitToAttackOffsetMax: 8
   attackCooldownTime: 3
   onAttackHeadOverrideTime: 0.5
   hitboxStartTime: 0.7
   hitboxEndTime: 1.5
-  jumpForce: 2
-  jumpOffset: 0.5
+  jumpForce: 5
+  jumpOffset: 2
+  isJumping: 0
+  jumpDelayTime: 1
   pounceAttackHitbox: {fileID: 9195085309917593314}
 --- !u!114 &8877127554942896544
 MonoBehaviour:
