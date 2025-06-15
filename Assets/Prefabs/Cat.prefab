@@ -48,10 +48,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bossState: 0
   animator: {fileID: 7761227224579724479}
-  walkAroundRadius: 0
-  walkSpeed: 0
+  walkSpeed: 0.55
+  walkRotationSpeed: 4
+  walkAroundRadius: 5
+  walkAroundTarget: {x: 0, y: 0, z: 0}
+  walkAroundSpeed: 8
+  orbiter: {fileID: 0}
+  orbitTarget: {fileID: 0}
   neckBone: {fileID: 5241195468657657107}
   lookAtTarget: {fileID: 0}
+  neckRotationSpeed: 0.5
   pounceAttackHitbox: {fileID: 9195085309917593314}
   FAK_timer: 0
 --- !u!114 &8877127554942896544

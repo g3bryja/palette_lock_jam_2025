@@ -227,6 +227,38 @@ Transform:
   m_Children: []
   m_Father: {fileID: 775617731}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &752505946
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 752505947}
+  m_Layer: 0
+  m_Name: Orbiter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &752505947
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 752505946}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1841261142}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &775617730
 GameObject:
   m_ObjectHideFlags: 0
@@ -464,11 +496,37 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3984370756428887814, guid: ce2fb069850a90042bafb1a1221f21f8, type: 3}
   m_PrefabInstance: {fileID: 1400341265166814490}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &2030008691 stripped
+--- !u!1 &1841261141
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 5241195468657657107, guid: ce2fb069850a90042bafb1a1221f21f8, type: 3}
-  m_PrefabInstance: {fileID: 1400341265166814490}
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1841261142}
+  m_Layer: 0
+  m_Name: Orbit Target
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1841261142
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1841261141}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 752505947}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1400341265166814490
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -614,13 +672,13 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4855677611188308648, guid: ce2fb069850a90042bafb1a1221f21f8, type: 3}
-      propertyPath: neckBone
+      propertyPath: orbiter
       value: 
-      objectReference: {fileID: 2030008691}
+      objectReference: {fileID: 752505946}
     - target: {fileID: 4855677611188308648, guid: ce2fb069850a90042bafb1a1221f21f8, type: 3}
-      propertyPath: walkSpeed
-      value: 0.55
-      objectReference: {fileID: 0}
+      propertyPath: orbitTarget
+      value: 
+      objectReference: {fileID: 1841261141}
     - target: {fileID: 4855677611188308648, guid: ce2fb069850a90042bafb1a1221f21f8, type: 3}
       propertyPath: lookAtTarget
       value: 
@@ -629,18 +687,6 @@ PrefabInstance:
       propertyPath: lockedNeckParent
       value: 
       objectReference: {fileID: 1659707489}
-    - target: {fileID: 4855677611188308648, guid: ce2fb069850a90042bafb1a1221f21f8, type: 3}
-      propertyPath: walkAroundRadius
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4855677611188308648, guid: ce2fb069850a90042bafb1a1221f21f8, type: 3}
-      propertyPath: neckRotationSpeed
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4855677611188308648, guid: ce2fb069850a90042bafb1a1221f21f8, type: 3}
-      propertyPath: walkRotationSpeed
-      value: 4
-      objectReference: {fileID: 0}
     - target: {fileID: 6064344773771458703, guid: ce2fb069850a90042bafb1a1221f21f8, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -663,3 +709,4 @@ SceneRoots:
   - {fileID: 1220660265}
   - {fileID: 1400341265166814490}
   - {fileID: 775617731}
+  - {fileID: 752505947}

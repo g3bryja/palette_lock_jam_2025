@@ -25,14 +25,26 @@ public class CatController : MonoBehaviour
     [Header("Walk")]
 
     [SerializeField]
-    [Tooltip("Radius of the circular region around which the boss will stalk the player before attacking.")]
-    private float walkAroundRadius;
-
-    [SerializeField]
     private float walkSpeed;
 
     [SerializeField]
     private float walkRotationSpeed;
+
+    [SerializeField]
+    [Tooltip("Radius of the circular region around which the boss will stalk the player before attacking.")]
+    private float walkAroundRadius;
+
+    [SerializeField]
+    private Vector3 walkAroundTarget;
+
+    [SerializeField]
+    private float walkAroundSpeed;
+
+    [SerializeField]
+    private GameObject orbiter;
+
+    [SerializeField]
+    private GameObject orbitTarget;
 
     [Header("Neck Animation Override")]
 
@@ -105,9 +117,11 @@ public class CatController : MonoBehaviour
         if (DistanceToPlayer() > walkAroundRadius)
         {
             bossState = BossState.WALK_TOWARDS;
-        } else
+        } else if (bossState != BossState.WALK_AROUND)
         {
             bossState = BossState.WALK_AROUND;
+            orbiter.transform.position = lookAtTarget.transform.position;
+            orbitTarget.transform.position = transform.position;
         }
     }
 
@@ -123,21 +137,23 @@ public class CatController : MonoBehaviour
                 transform.position += direction * walkSpeed * Time.deltaTime;
 
                 Vector3 target = new Vector3(lookAtTarget.transform.position.x, transform.position.y, lookAtTarget.transform.position.z);
-                //Vector3 fromTarget = new Vector3(transform.position.x, 0, transform.position.z);
-                //Vector3 toTarget = target - transform.position;
-                //float angle = Vector3.SignedAngle(fromTarget, toTarget, Vector3.up);
-                //float rotationLimit = Mathf.Abs(walkRotationSpeed * Time.deltaTime);
-                //if (Mathf.Abs(angle) > rotationLimit)
-                //{
-                //    angle = rotationLimit * Mathf.Sign(angle);
-                //}
-                //transform.Rotate(Vector3.forward, angle);
+                var currentRotation = transform.rotation;
                 transform.LookAt(target);
+                var targetRotation = transform.rotation;
+                transform.rotation = Quaternion.Lerp(currentRotation, targetRotation, walkRotationSpeed * Time.deltaTime);
 
                 Debug.DrawRay(transform.position, lookAtTarget.transform.position - transform.position, Color.red);
                 break;
             
             case BossState.WALK_AROUND:
+                transform.position = Vector3.Lerp(transform.position, orbitTarget.transform.position, walkSpeed * Time.deltaTime);
+
+                orbiter.transform.Rotate(Vector3.up, walkAroundSpeed * Time.deltaTime);
+                currentRotation = transform.rotation;
+                transform.LookAt(orbitTarget.transform.position);
+                targetRotation = transform.rotation;
+                transform.rotation = Quaternion.Lerp(currentRotation, targetRotation, walkRotationSpeed * Time.deltaTime);
+
                 Debug.DrawRay(transform.position, lookAtTarget.transform.position - transform.position, Color.yellow);
                 break;
             
@@ -153,5 +169,11 @@ public class CatController : MonoBehaviour
     private void HandleAttack()
     {
 
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(lookAtTarget.transform.position, walkAroundRadius / 2);
     }
 }
