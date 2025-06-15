@@ -13,6 +13,12 @@ public class PlayerController : MonoBehaviour
     private Vector3 direction;
     private bool dashInput;
 
+    [SerializeField]
+    private GameObject model;
+
+    [SerializeField]
+    private float rotationSpeed;
+
     [SerializeField] private float speed;
 
     [SerializeField] private float dashSpeed;
@@ -29,6 +35,13 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        if (direction != Vector3.zero)
+        {
+            var currentRotation = model.transform.rotation;
+            model.transform.LookAt(transform.position + direction);
+            var targetRotation = model.transform.rotation;
+            model.transform.rotation = Quaternion.Lerp(currentRotation, targetRotation, rotationSpeed * Time.deltaTime);
+        }
 
         if (!dashInput)
         {
