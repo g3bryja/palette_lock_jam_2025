@@ -48,7 +48,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bossState: 0
   animator: {fileID: 7761227224579724479}
+  walkAroundRadius: 0
+  walkSpeed: 0
   neckBone: {fileID: 5241195468657657107}
+  lookAtTarget: {fileID: 0}
   pounceAttackHitbox: {fileID: 9195085309917593314}
   FAK_timer: 0
 --- !u!114 &8877127554942896544
@@ -230,7 +233,9 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 9100000, guid: b3266df3ace9aea4cafa976f13f4ad62, type: 2}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: -8700617353114198275, guid: 7831148fcc60a9b4a8b0293a2798eee2, type: 3}
+    - {fileID: 65702495048144492, guid: 7831148fcc60a9b4a8b0293a2798eee2, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: -1958258179717381165, guid: 7831148fcc60a9b4a8b0293a2798eee2, type: 3}
       insertIndex: -1
