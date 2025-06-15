@@ -58,8 +58,15 @@ MonoBehaviour:
   neckBone: {fileID: 5241195468657657107}
   lookAtTarget: {fileID: 0}
   neckRotationSpeed: 0.5
+  orbitToAttackTime: 3
+  orbitToAttackOffsetMax: 3
+  attackCooldownTime: 3
+  onAttackHeadOverrideTime: 0.5
+  hitboxStartTime: 0.7
+  hitboxEndTime: 1.5
+  jumpForce: 2
+  jumpOffset: 0.5
   pounceAttackHitbox: {fileID: 9195085309917593314}
-  FAK_timer: 0
 --- !u!114 &8877127554942896544
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -122,7 +129,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9195085309917593314}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1

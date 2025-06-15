@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
+using DG.Tweening;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 public class CatController : MonoBehaviour
 {
@@ -57,41 +54,94 @@ public class CatController : MonoBehaviour
     [SerializeField]
     private float neckRotationSpeed;
 
+    [Header("Attack")]
+
+    [SerializeField]
+    private float orbitToAttackTime;
+
+    [SerializeField]
+    [Tooltip("Orbit-to-attack timer will add a random offset when initializing - this is the maximum value for that range.")]
+    private float orbitToAttackOffsetMax;
+
+    private float orbitToAttackTimer;
+
+    [SerializeField]
+    private float attackCooldownTime;
+
+    private float attackCooldownTimer;
+
+    [SerializeField]
+    [Tooltip("Need a small delay when transitioning to the attack state to help smooth head movement - this is that duration.")]
+    private float onAttackHeadOverrideTime;
+
+    private float onAttackHeadOverrideTimer;
+
+    [SerializeField]
+    private float hitboxStartTime;
+
+    private float hitboxStartTimer;
+    
+    [SerializeField]
+    private float hitboxEndTime;
+
+    private float hitboxEndTimer;
+
+    [SerializeField]
+    private float jumpForce;
+
+    [SerializeField]
+    private float jumpOffset;
+
+    private bool isJumping;
+
     [Header("Hitboxes")]
 
     [SerializeField]
     private GameObject pounceAttackHitbox;
 
-    [Header("FAK Debug")]
-
-    [SerializeField]
-    private float FAK_timer;
-    private float FAK_time = 3;
-
     void Start()
     {
         bossState = BossState.WALK_TOWARDS;
-        FAK_timer = FAK_time;
+        InitTimers();
     }
 
     void Update()
     {
         SetState();
+        // Band-aid fix
+        if (bossState != BossState.ATTACK && isJumping)
+        {
+            isJumping = false;
+        }
         Move();
         HandleAttack();
-        if (bossState == BossState.ATTACK)
+        if (bossState == BossState.WALK_AROUND)
+        {
+            UpdateTimer(ref orbitToAttackTimer);
+        }
+        UpdateTimer(ref attackCooldownTimer);
+        UpdateTimer(ref onAttackHeadOverrideTimer);
+        UpdateTimer(ref hitboxStartTimer);
+        UpdateTimer(ref hitboxEndTimer);
+
+        if (bossState == BossState.ATTACK && hitboxStartTimer <= 0 && hitboxEndTimer > 0)
         {
             pounceAttackHitbox.SetActive(true);
         } else
         {
             pounceAttackHitbox.SetActive(false);
         }
+
+        if (isJumping == false)
+        {
+            transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+        }
     }
 
     private void LateUpdate()
     {
         // Force the head to track the player's position
-        if (lookAtTarget != null)
+        if (lookAtTarget != null && (bossState != BossState.ATTACK || onAttackHeadOverrideTimer > 0))
         {
             Vector3 target = new Vector3(lookAtTarget.transform.position.x, neckBone.transform.position.y, lookAtTarget.transform.position.z);
             Debug.DrawRay(lookAtTarget.transform.position, target - lookAtTarget.transform.position, Color.green);
@@ -100,11 +150,25 @@ public class CatController : MonoBehaviour
             Vector3 fromTarget = new Vector3(neckBone.transform.up.x, 0, neckBone.transform.up.z);
             Vector3 toTarget = target - neckBone.transform.position;
             float angle = Vector3.SignedAngle(fromTarget, toTarget, Vector3.up);
-            Debug.Log(Vector3.Dot(fromTarget, toTarget));
 
             neckBone.transform.Rotate(Vector3.forward, angle);
             Debug.DrawRay(fromTargetOrigin, toTarget, Color.green);
         }
+    }
+
+    private void InitTimers()
+    {
+        ResetTimer(ref orbitToAttackTimer, orbitToAttackTime, orbitToAttackOffsetMax);
+    }
+
+    private void ResetTimer(ref float timer, float duration, float offsetMax = 0)
+    {
+        timer = duration + Random.Range(0, offsetMax);
+    }
+
+    private void UpdateTimer(ref float timer)
+    {
+        timer -= Time.deltaTime;
     }
 
     private float DistanceToPlayer()
@@ -114,14 +178,33 @@ public class CatController : MonoBehaviour
 
     private void SetState()
     {
+        var originalState = bossState;
+
         if (DistanceToPlayer() > walkAroundRadius)
         {
             bossState = BossState.WALK_TOWARDS;
-        } else if (bossState != BossState.WALK_AROUND)
+        }
+        else if (bossState == BossState.WALK_AROUND && orbitToAttackTimer <= 0 && attackCooldownTimer <= 0)
+        {
+            bossState = BossState.ATTACK;
+            ResetTimer(ref attackCooldownTimer, attackCooldownTime);
+            ResetTimer(ref onAttackHeadOverrideTimer, onAttackHeadOverrideTime);
+            ResetTimer(ref hitboxStartTimer, hitboxStartTime);
+            ResetTimer(ref hitboxEndTimer, hitboxEndTime);
+        }
+        else if (bossState != BossState.WALK_AROUND && attackCooldownTimer <= 0)
         {
             bossState = BossState.WALK_AROUND;
             orbiter.transform.position = lookAtTarget.transform.position;
-            orbitTarget.transform.position = transform.position;
+            Vector3 orbitTargetDirection = transform.position - orbiter.transform.position;
+            orbitTarget.transform.position = orbiter.transform.position + Vector3.Normalize(orbitTargetDirection) * walkAroundRadius;
+            ResetTimer(ref orbitToAttackTimer, orbitToAttackTime, orbitToAttackOffsetMax);
+        }
+
+        if (originalState != bossState)
+        {
+            animator.SetInteger("CatState", (int)bossState);
+            Debug.Log((int)bossState);
         }
     }
 
@@ -158,6 +241,24 @@ public class CatController : MonoBehaviour
                 break;
             
             case BossState.ATTACK:
+                if (onAttackHeadOverrideTimer <= 0 && isJumping == false)
+                {
+                    direction = transform.position - lookAtTarget.transform.position;
+                    //transform.DOJump(lookAtTarget.transform.position + direction * jumpOffset, jumpForce, 1, hitboxEndTime);
+                    isJumping = true;
+                }
+
+                if (hitboxEndTime <= 0 && isJumping)
+                {
+                    isJumping = false;
+                }
+
+                currentRotation = transform.rotation;
+                transform.LookAt(lookAtTarget.transform.position);
+                targetRotation = transform.rotation;
+                transform.rotation = Quaternion.Lerp(currentRotation, targetRotation, walkRotationSpeed * Time.deltaTime);
+
+                Debug.Log("Attack");
                 break;
             
             default:
