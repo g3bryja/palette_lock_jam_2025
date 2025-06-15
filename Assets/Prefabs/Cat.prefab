@@ -50,9 +50,9 @@ MonoBehaviour:
   animator: {fileID: 7761227224579724479}
   walkSpeed: 0.55
   walkRotationSpeed: 4
-  walkAroundRadius: 8
+  walkAroundRadius: 3
   walkAroundTarget: {x: 0, y: 0, z: 0}
-  walkAroundSpeed: 8
+  walkAroundSpeed: 7
   orbiter: {fileID: 0}
   orbitTarget: {fileID: 0}
   neckBone: {fileID: 5241195468657657107}

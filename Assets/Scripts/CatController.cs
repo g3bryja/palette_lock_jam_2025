@@ -11,6 +11,8 @@ public class CatController : MonoBehaviour
         ATTACK
     }
 
+    private string FREEZE_POSITION_ANIM_NAME = "AnimalArmature|AnimalArmature|AnimalArmature|Idle_2_HeadLow";
+
     [Header("Animation State")]
 
     [SerializeField]
@@ -217,14 +219,18 @@ public class CatController : MonoBehaviour
 
     private void Move()
     {
+        Debug.Log(animator.GetCurrentAnimatorClipInfo(0)[0].clip.name);
         switch (bossState)
         {
             case BossState.IDLE:
                 break;
 
             case BossState.WALK_TOWARDS:
-                Vector3 direction = lookAtTarget.transform.position - transform.position;
-                transform.position += direction * walkSpeed * Time.deltaTime;
+                if (animator.GetCurrentAnimatorClipInfo(0)[0].clip.name != FREEZE_POSITION_ANIM_NAME)
+                {
+                    Vector3 direction = lookAtTarget.transform.position - transform.position;
+                    transform.position += direction * walkSpeed * Time.deltaTime;
+                }
 
                 Vector3 target = new Vector3(lookAtTarget.transform.position.x, transform.position.y, lookAtTarget.transform.position.z);
                 var currentRotation = transform.rotation;
@@ -236,13 +242,16 @@ public class CatController : MonoBehaviour
                 break;
             
             case BossState.WALK_AROUND:
-                transform.position = Vector3.Lerp(transform.position, orbitTarget.transform.position, walkSpeed * Time.deltaTime);
+                if (animator.GetCurrentAnimatorClipInfo(0)[0].clip.name != FREEZE_POSITION_ANIM_NAME)
+                {
+                    transform.position = Vector3.Lerp(transform.position, orbitTarget.transform.position, walkSpeed * Time.deltaTime);
+                }
 
                 orbiter.transform.Rotate(Vector3.up, walkAroundSpeed * Time.deltaTime);
                 currentRotation = transform.rotation;
                 transform.LookAt(orbitTarget.transform.position);
                 targetRotation = transform.rotation;
-                transform.rotation = Quaternion.Lerp(currentRotation, targetRotation, walkRotationSpeed * Time.deltaTime);
+                transform.rotation = Quaternion.Lerp(currentRotation, targetRotation, walkAroundSpeed * Time.deltaTime);
 
                 Debug.DrawRay(transform.position, lookAtTarget.transform.position - transform.position, Color.yellow);
                 break;
@@ -251,9 +260,9 @@ public class CatController : MonoBehaviour
                 // Keep rotating orbiter target when attacking
                 orbiter.transform.Rotate(Vector3.up, walkAroundSpeed * Time.deltaTime);
 
-                if (pounceAttackHitbox.activeSelf && jumpDelayTimer <= 0)
+                if (pounceAttackHitbox.activeSelf && jumpDelayTimer <= 0 && animator.GetCurrentAnimatorClipInfo(0)[0].clip.name != FREEZE_POSITION_ANIM_NAME)
                 {
-                    direction = lookAtTarget.transform.position - transform.position;
+                    var direction = lookAtTarget.transform.position - transform.position;
                     float distance = Vector3.Distance(transform.position, lookAtTarget.transform.position);
                     distance -= jumpOffset;
                     transform.position = Vector3.Lerp(transform.position, transform.position + Vector3.Normalize(direction) * distance, jumpForce * Time.deltaTime);
